@@ -21,7 +21,7 @@ class Block:
         return self.shape
 
     def set_anchor(self, x, y):
-        self.anchor = (x, y)
+        self.anchor = [x, y]
 
     def _possible_shapes(self):
         shapes = [
@@ -37,13 +37,13 @@ class Block:
         return shapes
 
     def get_coords(self):
-        coords = [[self.anchor[0] + x, self.anchor[1] + y] for (x, y) in self.shape]
+        coords = [[self.anchor[0] + x, self.anchor[1] + y] for [x, y] in self.shape]
         return coords
 
     def remove_coord(self, coord):
         x = self.anchor[0] - coord[0]
         y = self.anchor[1] - coord[1]
-        self.shape.remove((x, y))
+        self.shape.remove([x, y])
 
     def _get_color(self):
         pos_colors = ["red", "yellow", "green", "white", "grey", "magenta", "cyan"]
@@ -51,7 +51,7 @@ class Block:
 
     def set_shape(self, shape):
         self.shape = []
-        for (x, y) in shape:
+        for [x, y] in shape:
             self.shape.append([x, y])
         self.WIDTH = np.max(self.shape, axis=0)[1] + 1
         self.HEIGHT = np.max(self.shape, axis=0)[0] + 1

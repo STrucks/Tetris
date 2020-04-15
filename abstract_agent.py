@@ -6,5 +6,5 @@ class AbstractAgent:
     def __init__(self):
         pass
 
-    def move(self, field, inactive_blocks, active_block):
+    def move(self, game):
         raise NotImplementedError()

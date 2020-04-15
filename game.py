@@ -1,5 +1,7 @@
-from block import Block
 import numpy as np
+from copy import deepcopy
+
+from block import Block
 from config_loader import config
 from game_enums import Actions, GameStates
 from abstract_agent import AbstractAgent
@@ -14,11 +16,11 @@ class Game:
         self.FIELD_WIDTH:int = config['FIELD-WIDTH']
         self.FIELD_HEIGHT:int = config['FIELD-HEIGHT']
         self.field = np.zeros(shape=(self.FIELD_HEIGHT, self.FIELD_WIDTH))
-        self.spawn_point = (0, int(self.FIELD_WIDTH/2))
+        self.spawn_point = [0, int(self.FIELD_WIDTH/2)]
         self.active_block:Block = None
         self.blocks = []
         self.game_state:GameStates = GameStates.RUNNING
-        self.agent:AbstractAgent = agent
+        self.agent: AbstractAgent = agent
         self.score = 0
 
     def update(self):
@@ -36,13 +38,13 @@ class Game:
             # check if active block would collide with another block
             collide_flag = False
             new_x_anchor = x_anchor + 1
-            for (x, y) in self.active_block.get_shape():
+            for [x, y] in self.active_block.get_shape():
                 if collide_flag:
                     continue
                 for b in self.blocks:
                     occupied_anchor_x, occupied_anchor_y = b.get_anchor()
-                    occupied_coords = [(occupied_anchor_x + x_o, occupied_anchor_y + y_o) for x_o, y_o in b.get_shape()]
-                    if (new_x_anchor + x, y_anchor + y) in occupied_coords:
+                    occupied_coords = [[occupied_anchor_x + x_o, occupied_anchor_y + y_o] for x_o, y_o in b.get_shape()]
+                    if [new_x_anchor + x, y_anchor + y] in occupied_coords:
                         self.blocks.append(self.active_block)
                         self.active_block = Block(self.spawn_point)
                         collide_flag = True
@@ -73,12 +75,12 @@ class Game:
     def move(self):
         # there is a 33/33/33 chance the active block will move left or right or stand still
         x_anchor, y_anchor = self.active_block.get_anchor()
-        action = self.agent.move(self.field, self.blocks, self.active_block)
+        action = self.agent.move(self)
         logging.debug("Next action: " + action.name)
         if action == Actions.ROTATE:
             new_shape = self.active_block.rotate()
             # check if the new coords are out of bounds:
-            new_coords = [(self.active_block.anchor[0] + x, self.active_block.anchor[1] + y) for [x, y] in new_shape]
+            new_coords = [[self.active_block.anchor[0] + x, self.active_block.anchor[1] + y] for [x, y] in new_shape]
             collide_flag = False
             for [x, y] in new_coords:
                 if collide_flag:
@@ -101,7 +103,7 @@ class Game:
             # check boundaries:
             if 0 <= new_y_anchor <= self.FIELD_WIDTH - self.active_block.WIDTH:
                 collide_flag = False
-                for (x, y) in self.active_block.get_shape():
+                for [x, y] in self.active_block.get_shape():
                     if collide_flag:
                         continue
                     for b in self.blocks:
@@ -142,7 +144,7 @@ class Game:
                 to_be_removed_shape = []
                 anchor = block.get_anchor()
 
-                for i, (x, y) in enumerate(shape):
+                for i, [x, y] in enumerate(shape):
                     if anchor[0] + x < index:
                         shape[i][0] += 1
                     elif anchor[0] + x == index:
@@ -159,3 +161,6 @@ class Game:
 
     def get_score(self):
         return self.score
+
+    def get_representations(self):
+        return deepcopy(self.field), deepcopy(self.blocks), deepcopy(self.active_block)

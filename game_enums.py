@@ -6,8 +6,8 @@ class GameStates(Enum):
     OVER = 1
 
 class Actions(Enum):
-    RIGHT = 0
-    LEFT = 1
-    ROTATE = 2
-    STAY = 3
+    STAY = 0
+    RIGHT = 1
+    LEFT = 2
+    ROTATE = 3
 

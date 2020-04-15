@@ -4,5 +4,5 @@ from game_enums import Actions
 
 class RandomAgent(AbstractAgent):
 
-    def move(self, field, inactive_blocks, active_block):
+    def move(self, game):
         return np.random.choice(list(Actions), p=[0.25, 0.25, 0.25, 0.25])

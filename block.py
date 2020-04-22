@@ -7,7 +7,8 @@ class Block:
         self.FIELDWIDTH = config['FIELD-WIDTH']
         self.FIELDHEIGHT = config['FIELD-HEIGHT']
         p_shapes = self._possible_shapes()
-        self.shape = p_shapes[np.random.randint(0, len(p_shapes))]
+        self.shape_id = np.random.randint(0, len(p_shapes))
+        self.shape = p_shapes[self.shape_id]
         #self.shape = p_shapes[-1]
         self.anchor = spawn_point
         self.WIDTH = np.max(self.shape, axis=0)[1] + 1
@@ -32,7 +33,6 @@ class Block:
             [[0, 0], [0, 1], [0, 2], [1, 1]],
             [[0, 0], [0, 1], [0, 2], [1, 2]],
             [[0, 0], [0, 1], [0, 2], [1, 0]],
-            [[0, 0], [1, 0]]
         ]
         return shapes
 

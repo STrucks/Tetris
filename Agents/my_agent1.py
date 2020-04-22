@@ -1,10 +1,12 @@
-from abstract_agent import AbstractAgent
+import operator
+from copy import deepcopy
+
+import numpy as np
+
+from Agents.abstract_agent import AbstractAgent
 from config_loader import config
 from game_enums import Actions
-import operator
-import logging
-import numpy as np
-from copy import deepcopy
+
 
 class MyAgent1(AbstractAgent):
 

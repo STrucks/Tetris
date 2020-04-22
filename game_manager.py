@@ -1,23 +1,18 @@
+from Agents.my_agent1 import MyAgent1
+from Agents.random_agent import RandomAgent
 from display import Display
 from game import Game
 from game_enums import GameStates
-from my_agent1 import MyAgent1
-from random_agent import RandomAgent
 
 
 class GameManager:
 
-    def __init__(self, ai="random"):
+    def __init__(self):
         self.display = Display()
-        if ai == "random":
-            self.agent = RandomAgent()
-        elif ai == "my1":
-            self.agent = MyAgent1()
-        else:
-            self.agent = RandomAgent()
 
-    def start_game(self, display=True):
-        game = Game(self.agent)
+
+    def start_game(self, agent, display=True):
+        game = Game(agent)
         game.add_block()
         if display:
             self.display.show(game)

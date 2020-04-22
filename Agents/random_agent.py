@@ -1,6 +1,8 @@
-from abstract_agent import AbstractAgent
 import numpy as np
+
+from Agents.abstract_agent import AbstractAgent
 from game_enums import Actions
+
 
 class RandomAgent(AbstractAgent):
 

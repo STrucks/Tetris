@@ -1,12 +1,12 @@
-import numpy as np
+import logging
 from copy import deepcopy
 
+import numpy as np
+
+from Agents.abstract_agent import AbstractAgent
 from block import Block
 from config_loader import config
 from game_enums import Actions, GameStates
-from abstract_agent import AbstractAgent
-
-import logging
 
 
 class Game:

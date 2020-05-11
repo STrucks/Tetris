@@ -23,6 +23,8 @@ class GA_MLP:
     """
 
     def __init__(self, in_nodes, out_nodes):
+        self.in_nodes = in_nodes
+        self.out_nodes = out_nodes
         self.w1 = np.random.rand(in_nodes, 20)
         self.w2 = np.random.rand(20, out_nodes)
 
@@ -34,3 +36,8 @@ class GA_MLP:
     def set_weights(self, w1, w2):
         self.w1 = w1
         self.w2 = w2
+
+    def clone(self):
+        copy = GA_MLP(in_nodes=self.in_nodes, out_nodes=self.out_nodes)
+        copy.set_weights(np.copy(self.w1), np.copy(self.w2))
+        return copy

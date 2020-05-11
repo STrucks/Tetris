@@ -12,7 +12,7 @@ from game_enums import Actions, GameStates
 class Game:
 
     def __init__(self, agent:AbstractAgent):
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.WARN)
         self.FIELD_WIDTH:int = config['FIELD-WIDTH']
         self.FIELD_HEIGHT:int = config['FIELD-HEIGHT']
         self.field = np.zeros(shape=(self.FIELD_HEIGHT, self.FIELD_WIDTH))

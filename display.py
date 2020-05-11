@@ -31,5 +31,5 @@ class Display:
         for i in range(game.FIELD_WIDTH+2):
             print("-", end="")
         print()
-        time.sleep(0.5)
+        time.sleep(0.3)
 
